@@ -32,10 +32,10 @@ FilePermissions GetFilePermission(const std::string &name);
 void PrepareWord(std::string &input);
 
 // Trim left non character symbols
-void TrimLeftNonChar(std::string &input);
+inline void TrimLeftNonChar(std::string &input);
 
 // Trim right non character symbols
-void TrimRightNonChar(std::string &input);
+inline void TrimRightNonChar(std::string &input);
 
 // Parse CLI arguments
 CliArguments ParseArgs(int argc, char **argv);

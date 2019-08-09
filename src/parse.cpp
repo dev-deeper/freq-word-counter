@@ -31,7 +31,7 @@ void PrepareWord(std::string &input) {
     TrimRightNonChar(input);
 }
 
-void TrimLeftNonChar(std::string &input) {
+inline void TrimLeftNonChar(std::string &input) {
     input.erase(
             input.begin(),
             find_if(input.begin(),
@@ -39,7 +39,7 @@ void TrimLeftNonChar(std::string &input) {
                     [](int ch) { return isalpha(ch); }));
 }
 
-void TrimRightNonChar(std::string &input) {
+inline void TrimRightNonChar(std::string &input) {
     input.erase(
             find_if(input.rbegin(),
                     input.rend(),
