@@ -4,7 +4,6 @@
 #include "parse.h"
 
 FilePermissions GetFilePermission(const std::string &name) {
-
     FilePermissions perm{};
 
     // Check that file exist
@@ -24,14 +23,12 @@ FilePermissions GetFilePermission(const std::string &name) {
 }
 
 void PrepareWord(std::string &input) {
-
     // Convert word to lower case
     std::transform(input.begin(), input.end(), input.begin(), ::tolower);
 
     // Trim begin and end non character symbols
     TrimLeftNonChar(input);
     TrimRightNonChar(input);
-
 }
 
 void TrimLeftNonChar(std::string &input) {

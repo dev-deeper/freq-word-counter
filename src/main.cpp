@@ -15,7 +15,6 @@ void Usage();
 void PrintError(const std::string &err);
 
 int main(int argc, char **argv) {
-
     // Parse CLI arguments
     CliArguments args = ParseArgs(argc, argv);
 
@@ -53,12 +52,10 @@ int main(int argc, char **argv) {
     }
 
     input_file.close();
-
     PairVector sorted_dict = SortDict(dict);
 
     // Check that output file was given
     if (args.out_file_set) {
-
         // Check output file permissions
         FilePermissions out_file_perm = GetFilePermission(args.out_filename);
         if (out_file_perm.f_flag and (not out_file_perm.w_flag)) {
@@ -74,9 +71,7 @@ int main(int argc, char **argv) {
             output_file << x.second << ' ' << x.first << std::endl;
 
         output_file.close();
-
     } else {
-
         // Write results to stdout
         for (const auto &x: sorted_dict)
             std::cout << x.second << ' ' << x.first << std::endl;
