@@ -10,10 +10,21 @@ Displays results to stdout (by default) or writes to a file.
 
 ### Build project
 ```
-make
-make test
+$ make
+$ make test
 ```
+### Usage
+```
+$ ./freq --help
+Usage: freq -i INPUT_FILE [-o OUTPUT_FILE]
+Counting repeated words in INPUT_FILE.
+Print output to stdout if OUTPUT_FILE doesn't given.
 
+Arguments:
+  -i, --input  set input file
+  -o, --output set output file
+  -h, --help   display this help and exit
+```
 ### Example
 ```
 $ cat in.txt
