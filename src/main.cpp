@@ -41,8 +41,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    std::ifstream input_file;
-    input_file.open(args.in_filename);
+    std::ifstream input_file(args.in_filename);
     WordCountDictionary dict;
 
     // Read input file
@@ -63,8 +62,7 @@ int main(int argc, char **argv) {
             return EXIT_FAILURE;
         }
 
-        std::ofstream output_file;
-        output_file.open(args.out_filename);
+        std::ofstream output_file(args.out_filename);
 
         // Write results to output file
         for (const auto &x: sorted_dict)
