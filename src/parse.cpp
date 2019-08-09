@@ -87,7 +87,6 @@ CliArguments ParseArgs(const int argc, char **argv) {
 }
 
 PairVector SortDict(const WordCountDictionary &map) {
-
     PairVector v_dict(map.begin(), map.end());
     std::sort(v_dict.begin(), v_dict.end(),
               [](const StringCountPair &a, const StringCountPair &b) {
