@@ -23,6 +23,17 @@ file_permissions getFilePermission(const std::string &name) {
     return perm;
 }
 
+void prepareWord(std::string &input) {
+
+    // Convert word to lower case
+    std::transform(input.begin(), input.end(), input.begin(), ::tolower);
+
+    // Trim begin and end non character symbols
+    trimLeftNonChar(input);
+    trimRightNonChar(input);
+
+}
+
 void trimLeftNonChar(std::string &input) {
     input.erase(
             input.begin(),
@@ -76,4 +87,15 @@ cli_arguments parseArgs(const int argc, char **argv) {
     }
 
     return args;
+}
+
+std::vector<std::pair<std::string, size_t>> sortDict(const std::unordered_map<std::string, size_t> &dict) {
+
+    std::vector<std::pair<std::string, size_t>> v_dict(dict.begin(), dict.end());
+    std::sort(v_dict.begin(), v_dict.end(),
+              [](const std::pair<std::string, size_t> &a, const std::pair<std::string, size_t> &b) {
+                  return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second);
+              });
+
+    return v_dict;
 }

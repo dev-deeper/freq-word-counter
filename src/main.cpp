@@ -48,44 +48,37 @@ int main(int argc, char **argv) {
 
     // Read input file
     for (std::string word; inputFile >> word;) {
-
-        // Convert word to lower case
-        std::transform(word.begin(), word.end(), word.begin(), ::tolower);
-
-        // Trim begin and end non character symbols
-        trimLeftNonChar(word);
-        trimRightNonChar(word);
-
-        // Add word to map
+        prepareWord(word);
         dict[word]++;
     }
 
-    std::vector<std::pair<std::string, size_t>> v_dict(dict.begin(), dict.end());
-    std::sort(v_dict.begin(), v_dict.end(),
-              [](const std::pair<std::string, size_t> &a, const std::pair<std::string, size_t> &b) {
-                  return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second);
-              });
+    inputFile.close();
+
+    auto sorted_dict = sortDict(dict);
 
     // Check that output file was given
     if (args.out_file_set) {
-        std::ofstream outFile;
-        outFile.open(args.out_file);
 
         // Check output file permissions
         file_permissions out_file_perm = getFilePermission(args.out_file);
-        if (not out_file_perm.W_flag) {
+        if (out_file_perm.F_flag and (not out_file_perm.W_flag)) {
             printError("File \"" + args.out_file + "\" writing prohibited.");
             return EXIT_FAILURE;
         }
 
+        std::ofstream outputFile;
+        outputFile.open(args.out_file);
+
         // Write results to output file
-        for (const auto &x: v_dict)
-            outFile << x.second << ' ' << x.first << std::endl;
+        for (const auto &x: sorted_dict)
+            outputFile << x.second << ' ' << x.first << std::endl;
+
+        outputFile.close();
 
     } else {
 
         // Write results to stdout
-        for (const auto &x: v_dict)
+        for (const auto &x: sorted_dict)
             std::cout << x.second << ' ' << x.first << std::endl;
     }
 

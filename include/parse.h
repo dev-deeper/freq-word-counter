@@ -1,5 +1,9 @@
-#pragma once
+#ifndef FREQ_PARSE_H_
+#define FREQ_PARSE_H_
+
 #include <string>
+#include <vector>
+#include <unordered_map>
 
 // CLI arguments structure
 struct cli_arguments {
@@ -20,10 +24,18 @@ struct file_permissions {
 // Get file permissions
 file_permissions getFilePermission(const std::string &name);
 
+// Convert word to lowercase
+void prepareWord(std::string &input);
+
 // Trim left non character symbols
 void trimLeftNonChar(std::string &input);
 
 // Trim right non character symbols
 void trimRightNonChar(std::string &input);
 
+// Parse CLI arguments
 cli_arguments parseArgs(int argc, char **argv);
+
+std::vector<std::pair<std::string, size_t>> sortDict(const std::unordered_map<std::string, size_t> &dict);
+
+#endif
