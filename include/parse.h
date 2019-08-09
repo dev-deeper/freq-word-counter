@@ -5,37 +5,41 @@
 #include <vector>
 #include <unordered_map>
 
+typedef std::unordered_map<std::string, size_t> WordCountDictionary;
+typedef std::pair<std::string, size_t> StringCountPair;
+typedef std::vector<StringCountPair> PairVector;
+
 // CLI arguments structure
-struct cli_arguments {
-    std::string in_file;        // input file
+struct CliArguments {
+    std::string in_filename;    // input filename
     bool in_file_set = false;   // input file set flag
-    std::string out_file;       // output file
+    std::string out_filename;   // output filename
     bool out_file_set = false;  // output file set flag
     bool help_set = false;      // help flag
 };
 
 // File permissions structure
-struct file_permissions {
-    bool F_flag = false; // the file exists
-    bool R_flag = false; // the file can be accessed for reading
-    bool W_flag = false; // the file can be accessed for writing
+struct FilePermissions {
+    bool f_flag = false; // the file exists
+    bool r_flag = false; // the file can be accessed for reading
+    bool w_flag = false; // the file can be accessed for writing
 };
 
 // Get file permissions
-file_permissions getFilePermission(const std::string &name);
+FilePermissions GetFilePermission(const std::string &name);
 
 // Convert word to lowercase
-void prepareWord(std::string &input);
+void PrepareWord(std::string &input);
 
 // Trim left non character symbols
-void trimLeftNonChar(std::string &input);
+void TrimLeftNonChar(std::string &input);
 
 // Trim right non character symbols
-void trimRightNonChar(std::string &input);
+void TrimRightNonChar(std::string &input);
 
 // Parse CLI arguments
-cli_arguments parseArgs(int argc, char **argv);
+CliArguments ParseArgs(int argc, char **argv);
 
-std::vector<std::pair<std::string, size_t>> sortDict(const std::unordered_map<std::string, size_t> &dict);
+PairVector SortDict(const WordCountDictionary &map);
 
 #endif

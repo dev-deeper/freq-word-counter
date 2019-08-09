@@ -3,38 +3,38 @@
 #include <unistd.h>
 #include "parse.h"
 
-file_permissions getFilePermission(const std::string &name) {
+FilePermissions GetFilePermission(const std::string &name) {
 
-    file_permissions perm{};
+    FilePermissions perm{};
 
     // Check that file exist
     if (access(name.c_str(), F_OK) == 0) {
-        perm.F_flag = true;
+        perm.f_flag = true;
 
         // Check read permissions
         if (access(name.c_str(), R_OK) == 0)
-            perm.R_flag = true;
+            perm.r_flag = true;
 
         // Check write permissions
         if (access(name.c_str(), W_OK) == 0)
-            perm.W_flag = true;
+            perm.w_flag = true;
     }
 
     return perm;
 }
 
-void prepareWord(std::string &input) {
+void PrepareWord(std::string &input) {
 
     // Convert word to lower case
     std::transform(input.begin(), input.end(), input.begin(), ::tolower);
 
     // Trim begin and end non character symbols
-    trimLeftNonChar(input);
-    trimRightNonChar(input);
+    TrimLeftNonChar(input);
+    TrimRightNonChar(input);
 
 }
 
-void trimLeftNonChar(std::string &input) {
+void TrimLeftNonChar(std::string &input) {
     input.erase(
             input.begin(),
             find_if(input.begin(),
@@ -42,7 +42,7 @@ void trimLeftNonChar(std::string &input) {
                     [](int ch) { return isalpha(ch); }));
 }
 
-void trimRightNonChar(std::string &input) {
+void TrimRightNonChar(std::string &input) {
     input.erase(
             find_if(input.rbegin(),
                     input.rend(),
@@ -50,7 +50,7 @@ void trimRightNonChar(std::string &input) {
             input.end());
 }
 
-cli_arguments parseArgs(const int argc, char **argv) {
+CliArguments ParseArgs(const int argc, char **argv) {
     const char *short_options = "i:o:h";
 
     const struct option long_options[] = {
@@ -61,7 +61,7 @@ cli_arguments parseArgs(const int argc, char **argv) {
     };
 
     opterr = 0; // do not print internal error message
-    cli_arguments args{};
+    CliArguments args{};
 
     while (true) {
         const auto curr_opt = getopt_long(argc, argv, short_options, long_options, nullptr);
@@ -71,11 +71,11 @@ cli_arguments parseArgs(const int argc, char **argv) {
 
         switch (curr_opt) {
             case 'i':
-                args.in_file = optarg;
+                args.in_filename = optarg;
                 args.in_file_set = true;
                 break;
             case 'o':
-                args.out_file = optarg;
+                args.out_filename = optarg;
                 args.out_file_set = true;
                 break;
             case 'h':
@@ -89,11 +89,11 @@ cli_arguments parseArgs(const int argc, char **argv) {
     return args;
 }
 
-std::vector<std::pair<std::string, size_t>> sortDict(const std::unordered_map<std::string, size_t> &dict) {
+PairVector SortDict(const WordCountDictionary &map) {
 
-    std::vector<std::pair<std::string, size_t>> v_dict(dict.begin(), dict.end());
+    PairVector v_dict(map.begin(), map.end());
     std::sort(v_dict.begin(), v_dict.end(),
-              [](const std::pair<std::string, size_t> &a, const std::pair<std::string, size_t> &b) {
+              [](const StringCountPair &a, const StringCountPair &b) {
                   return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second);
               });
 
